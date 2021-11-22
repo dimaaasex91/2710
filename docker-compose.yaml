@@ -2,49 +2,49 @@
 version: '3.7'
 
 services:
- flask:
-    # Путь до Dockerfile
-    build: ./python
-    # Имя для создаваемого контейнера
-    container_name: backend-flask
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.flask.rule=Host(`localhost`)"
-      - "traefik.http.routers.flask.entrypoints=web"
-    # Создание переменных окружения в контейнере
-    environment:
-      # для отладки (при запуске в релиз убрать!)
-      - FLASK_ENV=development
-      ## Позволяет отслеживать процесс работы приложения в командной строке
-      - PYTHONUNBUFFERED=True                   
-      ##
-    # Перезапускаем сервис в случае падения 
-    restart: on-failure
-    # Прокладывам путь для файлов. Все файлы, которые хранятся у вас в 
-    # директории ./backend, появятся в директории контейнера /backend
-    volumes:
-      - ./python:/python
-    # Открываем порт в контейнер
-    # Порт, который будет смотреть наружу : порт который используется внутри контейнера
-    ports:
-      - "5000:5000"
-    command: python main.py
+
+#------MINIO------#  
  minio:
    image: minio/minio:latest
+   container_name: "minio"
    command: server --console-address ":9001" /data/
    ports:
      - "9000:9000"
      - "9001:9001"
    environment:
      MINIO_ROOT_USER: dima
-     MINIO_ROOT_PASSWORD: amdmap91
+     MINIO_ROOT_PASSWORD: mypassword
+     MINIO_ACCESS_KEY: dima
+     MINIO_SECRET_KEY: mypassword
+
    volumes:
      - minio-storage:/data
+   networks: 
+     - my-network
    healthcheck:
      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
      interval: 30s
      timeout: 20s
      retries: 3
+
+#------CREATEBUCKETS------#      
+#  createbuckets:
+#     image: minio/mc
+#     container_name: "createbuckets"
+#     depends_on:
+#       - minio
+#     entrypoint: >
+#       /bin/sh -c "
+#       /usr/bin/mc config host add myminio http://localhost:9000 dima mypassword;
+#       /usr/bin/mc rm -r --force myminio/bucket1;
+#       /usr/bin/mc mb myminio/bucket1;
+#       /usr/bin/mc policy download myminio/bucket1;
+#       exit 0;
+#       "
+#     networks: 
+#      - my-network
+
+#------TRAEFIK------#      
  traefik:
   image: "traefik:v2.5"
   container_name: "traefik"
@@ -54,12 +54,46 @@ services:
     - "--providers.docker=true"
     - "--providers.docker.exposedbydefault=false"
     - "--entrypoints.web.address=:80"
-    - "--entrypoints.flask.address=:8080"
   ports:
     - "80:80"
     - "8080:8080"
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock:ro"
+  networks: 
+    - my-network
+
+ #------PYTHON-FLASK------#    
+ python:
+    # Путь до Dockerfile
+    build: 
+      context: ./python
+    # Имя для создаваемого контейнера
+    container_name: python
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.python.rule=Host(`localhost`)"
+      - "traefik.http.routers.python.entrypoints=web"
+    # Создание переменных окружения в контейнере
+    environment:
+      # для отладки (при запуске в релиз убрать!)
+      - FLASK_ENV=development
+      ## Позволяет отслеживать процесс работы приложения в командной строке
+      - PYTHONUNBUFFERED=True                   
+      ##
+    # Перезапускаем сервис в случае падения 
+    restart: on-failure
+    volumes:
+      - ./python:/python
+    # Открываем порт в контейнер
+    # Порт, который будет смотреть наружу : порт который используется внутри контейнера
+    ports:
+      - "5000:5000"
+    networks: 
+      - my-network
+    command: python main.py
 
 volumes:
  minio-storage:
+networks:
+  my-network:
+    driver: bridge
