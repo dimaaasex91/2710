@@ -10,7 +10,7 @@ import os,io
 
 app = Flask(__name__)
 app.config['ALLOWED_EXTENSIONS'] = { 'png', 'jpg', 'jpeg', 'gif'}
-app.config['MINIO'] = os.getenv("MINIO","localhost:9000")
+app.config['MINIO'] = os.getenv("MINIO","minio:9000")
 app.config['PREFIX'] = os.getenv("MINIO_PREFIX","http://localhost:9001/images")
 
 client = Minio(app.config['MINIO'],

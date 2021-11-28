@@ -74,8 +74,8 @@ services:
     #command: python main.py
     command: python /usr/local/lib/app/app.py
     environment:
-      MINIO: 'localhost:9000'
-      MINIO_PREFIX: 'http://localhost:9000/images'
+      MINIO: 'minio:9000'
+      MINIO_PREFIX: 'http://localhost:9001/images'
       MINIO_ROOT_USER: dima
       MINIO_ROOT_PASSWORD: mypassword
 volumes:
