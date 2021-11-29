@@ -32,5 +32,6 @@ build:
     - docker-compose up -d
   only:
     - main
+    - check_buckets
   
   
