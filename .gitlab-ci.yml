@@ -8,19 +8,19 @@ before_script:
   - docker-compose --version
 
 stages:
-  - "test"
+  # - "test"
   - "build"
 
-test:
-  stage: test
-  tags:
-    - "docker"
-  script:
-    - pytest --junitxml=report.xml
-  artifacts:
-    when: always
-    reports:
-      junit: report.xml
+# test:
+#   stage: test
+#   tags:
+#     - "docker"
+#   script:
+#     - pytest --junitxml=report.xml
+#   artifacts:
+#     when: always
+#     reports:
+#       junit: report.xml
 
 build:
   stage: build
