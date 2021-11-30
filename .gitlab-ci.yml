@@ -1,11 +1,40 @@
-build:
+image: python:3.9
+
+stages:
+  - ver
+  - build
+  - tests
+  - deploy
+
+ver:
+  stage: ver
+  tags:
+    - docker
+  script:
+    - python --version
+    - whoami
+
+build_job:
   stage: build
   tags:
     - docker
   script:
-    - docker build -t dimaaasex911/python-flask:latest
-    - docker image push dimaaasex911/python-flask:latest
-    - aws ecs update-service --cluster python-flask --service python-flask-service --force-new-deployment
+    - WORKDIR /backend
+    - COPY requirements.txt /backend
+    - RUN pip3 install --upgrade pip -r requirements.txt
+    - RUN git clone https://github.com/minio/minio-py && cd minio-py && python setup.py install
+    - COPY app.py /usr/local/lib/app/
+    - COPY templates/ /usr/local/lib/app/templates/
+    - COPY . /backend
+  artifacts:
+    when: always
+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
+    paths:
+      - ./*
+    exclude:
+      - ./git/**/*
+      - .gitlab-ci.yml
+      - .gitignore
   only:
     - main
     - try_gitlab_ci
