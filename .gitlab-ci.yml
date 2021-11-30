@@ -19,13 +19,7 @@ build_job:
   tags:
     - docker
   script:
-    - WORKDIR /backend
-    - COPY requirements.txt /backend
-    - RUN pip3 install --upgrade pip -r requirements.txt
-    - RUN git clone https://github.com/minio/minio-py && cd minio-py && python setup.py install
-    - COPY app.py /usr/local/lib/app/
-    - COPY templates/ /usr/local/lib/app/templates/
-    - COPY . /backend
+    - pip install -r requirements.txt
   artifacts:
     when: always
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
