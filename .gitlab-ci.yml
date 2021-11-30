@@ -19,7 +19,7 @@ build_job:
   tags:
     - docker
   script:
-    - pip install -r requirements.txt
+    - pip install -r python/requirements.txt
   artifacts:
     when: always
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
