@@ -1,42 +1,13 @@
-variables:
-  DOCKER_HOST: tcp://docker:2375/
-  DOCKER_DRIVER: overlay2
-
-image: 
-  name: docker/compose:latest
-
-services:
-  - docker:dind
-
-before_script:
-  - docker version
-  - docker-compose version
-
-stages:
-  # - "test"
-  - "build"
-
-# test:
-#   stage: test
-#   tags:
-#     - "docker"
-#   script:
-#     - pytest --junitxml=report.xml
-#   artifacts:
-#     when: always
-#     reports:
-#       junit: report.xml
-
 build:
   stage: build
   tags:
-    - "docker"
+    - docker
   script:
-    - docker-compose down
-    - docker-compose build
-    - docker-compose up -d
+    - docker build -t dimaaasex911/python-flask:latest
+    - docker image push dimaaasex911/python-flask:latest
+    - aws ecs update-service --cluster python-flask --service python-flask-service --force-new-deployment
   only:
     - main
-    - check_buckets
+    - try_gitlab_ci
   
   
