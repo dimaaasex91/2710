@@ -45,7 +45,7 @@ build_docker_image:
     - docker info
   script:
     - echo "build docker image"
-    - docker build -t $CI_REGISTRY_IMAGE:latest ./python/
+    - docker build -t $CI_REGISTRY_IMAGE:latest .
 
 push_docker_image:
   stage: push_image
