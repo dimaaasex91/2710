@@ -32,8 +32,8 @@ build_docker_image:
   before_script: 
     - docker info
   script:
-    - cd python
-    - docker build -t dimaaasex911/python-flask
+    #- cd python
+    - docker build -t dimaaasex911/python-flask ./Python
 
 
 
