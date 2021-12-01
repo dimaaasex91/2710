@@ -34,9 +34,8 @@ services:
       MINIO_ROOT_PASSWORD: mypassword
     entrypoint: >
       /bin/sh -c "curl --retry 3 --retry-connrefused --retry-delay 2
-      http://minio:9000 && /usr/bin/mc config host add srv http://minio:9000
-      $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} && /usr/bin/mc mb srv/images
-      && /usr/bin/mc policy set public srv/images"
+      http://minio:9000 && /usr/bin/mc config host add srv http://minio:9000$${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD} && /usr/bin/mc mb http://minio:9000$${MINIO_ROOT_USER}/images
+      && /usr/bin/mc policy set public http://minio:9000$${MINIO_ROOT_USER}/images"
     networks:
       - my-network
   traefik:
