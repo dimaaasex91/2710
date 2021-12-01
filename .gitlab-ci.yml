@@ -1,23 +1,16 @@
 stages:
-  - ver
   - build
   - push_image
   - tests
   - deploy
-
-ver:
-  stage: ver
-  tags:
-    - docker
-  script:
-    - python --version
-    - whoami
 
 build_python:
   stage: build
   image: python:3.9
   tags:
     - docker
+  before_script:
+    - python --version
   script:
     - pip install -r python/requirements.txt
   artifacts:
