@@ -59,6 +59,7 @@ push_docker_image:
     - docker push $CI_REGISTRY_IMAGE:latest
 
 
+
 # build_minio:
 # stage: build
 # image: minio/minio:latest
