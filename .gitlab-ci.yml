@@ -35,6 +35,8 @@ build_python:
       - ./git/**/*
       - .gitlab-ci.yml
       - .gitignore
+    only:
+    - merge_requests
 
 build_docker_image:
   stage: build
@@ -44,8 +46,10 @@ build_docker_image:
   before_script: 
     - docker info
   script:
-    #- cd python
+    - echo "build docker image"
     - docker build -t dimaaasex911/python-flask ./python/
+  only:
+    - merge_requests
 
 
 
