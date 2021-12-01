@@ -1,8 +1,20 @@
+default:
+  image: docker:20
+  services:
+    - name: docker:20-dind
+
 stages:
   - build
   - push_image
   - tests
   - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  LC_ALL: "en_US.UTF-8"
+  LANG: "en_US.UTF-8"
+  GIT_DEPTH: "5"
 
 build_python:
   stage: build
@@ -33,7 +45,7 @@ build_docker_image:
     - docker info
   script:
     #- cd python
-    - docker build -t dimaaasex911/python-flask ./Python
+    - docker build -t dimaaasex911/python-flask ./python/
 
 
 
