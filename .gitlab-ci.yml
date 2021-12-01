@@ -36,8 +36,6 @@ build_python:
       - ./git/**/*
       - .gitlab-ci.yml
       - .gitignore
-    # only:
-    # - merge_requests
 
 build_docker_image:
   stage: build
@@ -49,8 +47,6 @@ build_docker_image:
   script:
     - echo "build docker image"
     - docker build -t $CI_REGISTRY_IMAGE:latest ./python/
-  # only:
-  #   - merge_requests
 
 push_docker_image:
   stage: push_image
