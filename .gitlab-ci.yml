@@ -26,6 +26,7 @@ build_python:
 
 build_docker_image:
   stage: build
+  needs: [build_python]
   tags:
     - docker
   before_script: 
