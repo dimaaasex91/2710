@@ -59,6 +59,7 @@ push_docker_image:
   before_script:
     - echo "start login to dockerhub"
     - echo --password $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - echo "login to dockerhub is sucessfull"
   script:
     - docker push ./python/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   # except:
