@@ -65,6 +65,7 @@ push_docker_image:
   #     - main
 
 
+
 # build_minio:
 # stage: build
 # image: minio/minio:latest
