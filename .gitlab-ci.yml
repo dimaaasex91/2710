@@ -35,8 +35,8 @@ build_python:
       - ./git/**/*
       - .gitlab-ci.yml
       - .gitignore
-    only:
-      - main
+    # only:
+    #   - main
 
 build_docker_image:
   stage: build
@@ -48,8 +48,8 @@ build_docker_image:
   script:
     - echo "build docker image"
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA ./python/
-  only:
-      - main
+  # only:
+  #     - main
 
 push_docker_image:
   stage: push_image
@@ -60,8 +60,8 @@ push_docker_image:
     - echo --password $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
   script:
     - docker push ./python/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-  except:
-      - main
+  # except:
+  #     - main
 
 
 
