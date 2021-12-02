@@ -59,7 +59,7 @@ push_docker_image:
   before_script:
     - echo --password $CI_REGISTRY_PASSWORD | docker login --username $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
   script:
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker push ./python/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
   except:
       - main
 
