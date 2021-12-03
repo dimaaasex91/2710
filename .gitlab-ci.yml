@@ -63,7 +63,7 @@ push_docker_image:
   script:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   only:
-    - merge_request
+    - merge_requests
 
 deploy_docker_image:
   stage: deploy
