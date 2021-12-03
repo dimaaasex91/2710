@@ -59,13 +59,13 @@ push_docker_image:
     - echo "login to dockerhub is sucessfull"
   script:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  only:
-    refs:
-      - main
-      - merge_requests
-    changes:
-      - ".gitlab-ci.yml"
-      - "/python/*"
+  # only:
+  #   refs:
+  #     - main
+  #     - merge_requests
+  #   changes:
+  #     - ".gitlab-ci.yml"
+  #     - "/python/*"
  
 
 # deploy_docker_image:
