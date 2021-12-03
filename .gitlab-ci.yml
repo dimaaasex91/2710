@@ -35,8 +35,6 @@ build_python:
       - ./git/**/*
       - .gitlab-ci.yml
       - .gitignore
-    only:
-      - main
 
 build_docker_image:
   stage: build
@@ -48,8 +46,6 @@ build_docker_image:
   script:
     - echo "build docker image"
     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG ./python/
-  only:
-    - main
 
 push_docker_image:
   stage: push_image
@@ -62,8 +58,7 @@ push_docker_image:
     - echo "login to dockerhub is sucessfull"
   script:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
-  only:
-    - merge_requests
+  only: [merge_requests]
 
 deploy_docker_image:
   stage: deploy
