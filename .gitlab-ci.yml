@@ -61,7 +61,7 @@ push_docker_image:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   only:
     refs:
-      - master
+      - main
       - merge_requests
     changes:
       - ".gitlab-ci.yml"
