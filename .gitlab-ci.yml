@@ -54,7 +54,7 @@ push_docker_image:
     - docker
   before_script:
     - echo "start login to hub"
-    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY 
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY 
     - echo "login to hub is sucessfull"
   script:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
