@@ -71,6 +71,7 @@ push_docker_image:
 #   TF_ROOT: ${CI_PROJECT_DIR}/environments/example/production
 #   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/example-production
 
+
 # cache:
 #   key: example-production
 #   paths:
