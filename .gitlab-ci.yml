@@ -80,6 +80,8 @@ push_docker_image:
 #     - ${TF_ROOT}/.terraform
 
 
+
+
 # build_minio:
 # stage: build
 # image: minio/minio:latest
