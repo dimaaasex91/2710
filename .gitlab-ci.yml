@@ -53,7 +53,7 @@ push_docker_image:
   tags:
     - docker
   before_script:
-    - echo "start login to dockerhub"
+    - echo "start login to hub"
     - docker login $CI_REGISTRY -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
     - echo "login to dockerhub is sucessfull"
   script:
