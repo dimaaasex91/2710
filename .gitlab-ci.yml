@@ -61,6 +61,7 @@ push_docker_image:
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   #only: [merge_requests]
 
+
 # deploy_docker_image: ---
 #   stage: deploy 
 #   needs: [push_docker_image]
