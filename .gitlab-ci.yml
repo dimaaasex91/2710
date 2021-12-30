@@ -56,7 +56,7 @@ push_docker_image:
   before_script:
     - echo "start login to hub"
     #- echo "$CI_JOB_TOKEN" | docker login $CI_REGISTRY -u gitlab-ci-token --password-stdin   # FROM GITLAB
-    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER_NEXUS --password-stdin
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "gitlab-ci-token" $CI_REGISTRY --password-stdin
     #- docker login -u $CI_REGISTRY_USER_NEXUS -p $CI_REGISTRY_PASSWORD $CI_REGISTRY_NEXUS 
     - echo "login to hub is sucessfull"
   script:
