@@ -61,7 +61,7 @@ push_docker_image:
     - echo "login to hub is sucessfull"
   script:
     #- docker push $CI_REGISTRY_IMAGE_NEXUS:$CI_COMMIT_REF_SLUG # FROM GITLAB
-    - docker push $CI_REGISTRY_NEXUS/CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG
+    - docker push $CI_REGISTRY_NEXUS/$CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG
   #only: [merge_requests]
 
 
