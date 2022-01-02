@@ -30,12 +30,12 @@ stages:
       - ./git/**/*
       - .gitlab-ci.yml
       - .gitignore
-   rules:
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+  #rules:
+  #  - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
 
 build_python:
-  <<: *build_template
   image: python:3.9
+  <<: *build_template
   before_script:
     - python --version
   script:
