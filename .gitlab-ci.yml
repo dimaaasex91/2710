@@ -3,12 +3,6 @@ default:
   services:
     - name: docker:20-dind
 
-stages:
-  - build
-  - push_image
-  - tests
-  - deploy
-
 variables:
   DOCKER_DRIVER: overlay2
   DOCKER_TLS_CERTDIR: ""
@@ -16,15 +10,16 @@ variables:
   LANG: "en_US.UTF-8"
   GIT_DEPTH: "5"
 
-build_python:
+stages:
+  - build
+  - tests
+  - push_image
+  - deploy
+
+.build_temlate: &build_template
   stage: build
-  image: python:3.9
   tags:
     - docker
-  before_script:
-    - python --version
-  script:
-    - pip install -r python/requirements.txt
   artifacts:
     when: always
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
@@ -35,7 +30,17 @@ build_python:
       - ./git/**/*
       - .gitlab-ci.yml
       - .gitignore
+   rules:
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
 
+build_python:
+  <<: *build_template
+  image: python:3.9
+  before_script:
+    - python --version
+  script:
+    - pip install -r python/requirements.txt
+  
 build_docker_image:
   stage: build
   needs: [build_python]
