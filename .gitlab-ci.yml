@@ -30,8 +30,8 @@ stages:
       - ./git/**/*
       - .gitlab-ci.yml
       - .gitignore
-  rules:
-  - if: '$CI_COMMIT_REF_NAME == "main"'
+  #rules:
+  #- if: '$CI_COMMIT_REF_NAME == "main"'
   #rules:
   #  - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
 
