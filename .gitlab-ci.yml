@@ -59,6 +59,9 @@ build_docker_image:
 
 tests_with_SQ:
   stage: tests
+  needs: [build_docker_image]
+  tags:
+    - docker
   image: 
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]
@@ -78,7 +81,7 @@ tests_with_SQ:
 
 push_docker_image:
   stage: push_image
-  needs: [build_docker_image]
+  needs: [tests_with_SQ]
   tags:
     - docker
   before_script:
