@@ -100,7 +100,6 @@ push_docker_image:
 
 
 
-
 # deploy_docker_image: ---
 #   stage: deploy 
 #   needs: [push_docker_image]
