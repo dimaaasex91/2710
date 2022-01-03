@@ -71,6 +71,8 @@ push_docker_image:
     #- docker push $CI_REGISTRY_IMAGE_NEXUS:$CI_COMMIT_REF_SLUG # FROM GITLAB
     - docker push $CI_REGISTRY_NEXUS/$CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG
   #only: [merge_requests]
+  rules:
+  - if: '$CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
 
 
 
