@@ -15,14 +15,15 @@ client = Minio(app.config['MINIO'],
       secret_key=os.getenv("MINIO_ROOT_PASSWORD","mypassword"))
 
 def allowed_file(filename):
+    """A dummy docstring."""
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 @app.route("/")
 def index():
     if not client.bucket_exists("images"):
-      print("Foo")
-      return render_template('error.html',
+        print("Foo")
+        return render_template('error.html',
       status_text="Internal Server Error",
       msg="Bucket \"images\" does not exist!",
       code=500,
@@ -33,8 +34,8 @@ def index():
 @app.route("/upload",methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
-      flash('No file!')
-      return redirect(request.url)
+        flash('No file!')
+        return redirect(request.url)
 
     file = request.files['file']
 
