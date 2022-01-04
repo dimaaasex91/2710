@@ -1,5 +1,5 @@
 import os  #, io
-import Minio
+from minio import Minio
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, flash, request, redirect
 
