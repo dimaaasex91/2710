@@ -43,7 +43,7 @@ pylint:
     - docker
   before_script:
     - python --version
-    - usr/local/bin/python -m pip install --upgrade pip
+    - python -m pip install --upgrade pip
     - pip install pylint
     - pip install -r python/requirements.txt
   script:
