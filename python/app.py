@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, request, redirect
 from werkzeug.utils import secure_filename
 from minio import Minio
-import os,io
+import os, io
 
 app = Flask(__name__)
 app.config['ALLOWED_EXTENSIONS'] = { 'png', 'jpg', 'jpeg', 'gif'}
