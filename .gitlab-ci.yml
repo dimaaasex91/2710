@@ -11,9 +11,9 @@ variables:
   GIT_DEPTH: "5"
 
 stages:
-  - build
   - static_analysis
   - tests
+  - build
   - build_image
   - push_image
   - deploy
@@ -36,24 +36,16 @@ stages:
   #- if: '$CI_COMMIT_REF_NAME == "main"'
   #rules:
   #  - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
-
-build_python:
-  image: python:3.9
-  <<: *build_template
-  before_script:
-    - python --version
-  script:
-    - pip install pytest
-    - pip install -r python/requirements.txt
   
 pylint:
   stage: static_analysis
-  needs: [build_python]
   tags:
     - docker
+  before_script:
+    - python --version
+    - pip install pylint
   script:
-  - pip install pylint
-  - pylint -d C0301,C0114 python/*.py
+    - pylint -d C0301,C0114 python/*.py
 
 tests_with_SQ:
   stage: tests
@@ -76,9 +68,19 @@ tests_with_SQ:
   only:
     - main 
 
+build_python:
+  image: python:3.9
+  <<: *build_template
+  needs: [tests_with_SQ]
+  before_script:
+    - python --version
+  script:
+    - pip install pytest
+    - pip install -r python/requirements.txt
+
 build_docker_image:
   stage: build_image
-  needs: [tests_with_SQ]
+  needs: [build_python]
   tags:
     - docker
   before_script: 
