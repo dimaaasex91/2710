@@ -12,6 +12,7 @@ variables:
 
 stages:
   - build
+  - static_analysis
   - tests
   - push_image
   - deploy
@@ -41,6 +42,8 @@ build_python:
   before_script:
     - python --version
   script:
+    - pip install pytest
+    - pip install pylint
     - pip install -r python/requirements.txt
   
 build_docker_image:
@@ -56,6 +59,11 @@ build_docker_image:
     - echo "build docker sucessfull"
     - docker tag $CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG $CI_REGISTRY_NEXUS/$CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG
 
+
+pylint:
+  stage: static_analysis
+  script:
+  - pylint -d C0301,C0114 python/*.py
 
 tests_with_SQ:
   stage: tests
