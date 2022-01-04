@@ -14,6 +14,7 @@ stages:
   - build
   - static_analysis
   - tests
+  - build_image
   - push_image
   - deploy
 
@@ -46,23 +47,11 @@ build_python:
     - pip install pylint
     - pip install -r python/requirements.txt
   
-build_docker_image:
-  stage: build
+pylint:
+  stage: static_analysis
   needs: [build_python]
   tags:
     - docker
-  before_script: 
-    - docker info
-  script:
-    - echo "build docker image"
-    - docker build -t $CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG ./python/
-    - echo "build docker sucessfull"
-    - docker tag $CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG $CI_REGISTRY_NEXUS/$CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG
-
-
-pylint:
-  stage: static_analysis
-  needs: [build_docker_image]
   script:
   - pylint -d C0301,C0114 python/*.py
 
@@ -86,6 +75,19 @@ tests_with_SQ:
   allow_failure: true
   only:
     - main 
+
+build_docker_image:
+  stage: build_image
+  needs: [tests_with_SQ]
+  tags:
+    - docker
+  before_script: 
+    - docker info
+  script:
+    - echo "build docker image"
+    - docker build -t $CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG ./python/
+    - echo "build docker sucessfull"
+    - docker tag $CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG $CI_REGISTRY_NEXUS/$CI_IMAGE_NAME:$CI_COMMIT_REF_SLUG
 
 
 push_docker_image:
