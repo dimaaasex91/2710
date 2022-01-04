@@ -62,12 +62,13 @@ build_docker_image:
 
 pylint:
   stage: static_analysis
+  needs: [build_docker_image]
   script:
   - pylint -d C0301,C0114 python/*.py
 
 tests_with_SQ:
   stage: tests
-  needs: [build_docker_image]
+  needs: [pylint]
   tags:
     - docker
   image: 
