@@ -44,7 +44,6 @@ build_python:
     - python --version
   script:
     - pip install pytest
-    - pip install pylint
     - pip install -r python/requirements.txt
   
 pylint:
@@ -53,6 +52,7 @@ pylint:
   tags:
     - docker
   script:
+  - pip install pylint
   - pylint -d C0301,C0114 python/*.py
 
 tests_with_SQ:
@@ -92,7 +92,7 @@ build_docker_image:
 
 push_docker_image:
   stage: push_image
-  needs: [tests_with_SQ]
+  needs: [build_docker_image]
   tags:
     - docker
   before_script:
