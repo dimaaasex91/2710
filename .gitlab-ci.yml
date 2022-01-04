@@ -146,4 +146,4 @@ push_docker_image:
 #     - .gitlab-ci.yml
 #     - .gitignore
 # only:
-#   - main
+#   - main 
