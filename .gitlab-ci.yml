@@ -14,7 +14,6 @@ stages:
   - static_analysis
   - tests
   - build
-  - build_image
   - push_image
   - deploy
 
@@ -80,7 +79,7 @@ build_python:
     - pip install -r python/requirements.txt
 
 build_docker_image:
-  stage: build_image
+  stage: build
   needs: [build_python]
   tags:
     - docker

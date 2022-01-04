@@ -1,5 +1,5 @@
-from flask import Flask, render_template, flash, request, redirect, url_for
-from werkzeug.utils import secure_filename
+from flask import Flask, render_template, flash, request, redirect
+#from werkzeug.utils import secure_filename
 
 # Copyright © 2021 Markus W Mahlberg
 # This work is free. You can redistribute it and/or modify it under the
