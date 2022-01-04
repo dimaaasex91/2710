@@ -1,0 +1,58 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+ubuntu_prefix = "UbntAnsible"
+ubuntu_count = 2
+ubuntu_count_cpus = 2
+ubuntu_count_memory = "2048"
+centos_prefix = "CentosAnsible"
+centos_count = 2
+centos_count_cpus = 2
+centos_count_memory = "2048"
+ubuntu_version = "ubuntu/trusty64"
+centos_version = "centos/7"
+cidr_prefix = "192.168.123"
+
+
+Vagrant.configure("2") do |config|
+  (1..ubuntu_count).each do |i|
+    config.vm.define "#{ubuntu_prefix}-#{i}" do |node|
+      node.vm.box = "#{ubuntu_version}"
+      node.vm.box_check_update = true
+      node.vm.hostname = "#{ubuntu_prefix}-#{i}"
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "#{ubuntu_prefix}-#{i}"
+        vb.check_guest_additions = true
+        vb.cpus = "#{ubuntu_count_cpus}"
+        vb.memory = "#{ubuntu_count_memory}"
+      end
+      node.vm.network "private_network", ip: "#{cidr_prefix}.#{i+1}"
+      node.vm.provision "shell", inline: <<-SHELL
+        sudo apt update 
+        sudo apt upgrade
+      SHELL
+    end
+  end
+
+  (1..centos_count).each do |i|
+    config.vm.define "#{centos_prefix}-#{i}" do |node|
+      node.vm.box = "#{centos_version}"
+      node.vm.box_check_update = true
+      node.vm.hostname = "#{centos_prefix}-#{i}"
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "#{centos_prefix}-#{i}"
+        vb.check_guest_additions = true
+        vb.cpus = "#{centos_count_cpus}"
+        vb.memory = "#{centos_count_memory}"
+      end
+      node.vm.network "private_network", ip: "#{cidr_prefix}.#{ubuntu_count+i+1}"
+      node.vm.provision "shell", inline: <<-SHELL
+        sudo yum update 
+        sudo yum upgrade
+      SHELL
+    end
+  end
+end
