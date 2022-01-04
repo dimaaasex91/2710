@@ -1,5 +1,5 @@
 import os  #, io
-from minio import Minio
+import Minio
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, flash, request, redirect
 
@@ -21,6 +21,7 @@ def allowed_file(filename):
 
 @app.route("/")
 def index():
+    """A dummy docstring."""
     if not client.bucket_exists("images"):
         print("Foo")
         return render_template('error.html',
@@ -33,6 +34,7 @@ def index():
 
 @app.route("/upload",methods=['POST'])
 def upload_file():
+    """A dummy docstring."""
     if 'file' not in request.files:
         flash('No file!')
         return redirect(request.url)
