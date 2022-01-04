@@ -1,4 +1,4 @@
-import os  #, io
+import os
 from minio import Minio
 from werkzeug.utils import secure_filename
 from flask import Flask, render_template, flash, request, redirect
@@ -58,4 +58,4 @@ def upload_file():
         return redirect("/")
     return redirect("/")
 if __name__ == "__main__":
-    app.run(host=os.getenv("APP_HOST","0.0.0.0"),port=os.getenv("APP_PORT","5000"))   #add "" to 5000
+    app.run(host=os.getenv("APP_HOST","0.0.0.0"),port=os.getenv("APP_PORT","5000"))
