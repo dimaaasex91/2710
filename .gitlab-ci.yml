@@ -50,7 +50,7 @@ pylint:
 
 tests_with_SQ:
   stage: tests
-  needs: [pylint]
+  #needs: [pylint]
   tags:
     - docker
   image: 
