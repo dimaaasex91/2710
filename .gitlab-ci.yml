@@ -38,6 +38,7 @@ stages:
   #  - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
   
 pylint:
+  image: python:3.9
   stage: static_analysis
   tags:
     - docker
