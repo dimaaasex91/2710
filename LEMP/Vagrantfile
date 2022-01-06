@@ -7,7 +7,7 @@
 ubuntu_prefix = "UbntAnsible"
 ubuntu_count = 2
 ubuntu_count_cpus = 2
-ubuntu_count_memory = "2048"
+ubuntu_count_memory = "1024"
 ubuntu_version = "ubuntu/trusty64"
 centos_prefix = "CentosAnsible"
 centos_count = 2
