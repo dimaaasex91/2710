@@ -1,2 +1,15 @@
 ---
-# tasks file for nginx
+- name: Add Nginx Repository
+  apt_repository: repo='ppa:nginx/stable' state=present
+  register: nginxppastable
+
+- name: Install Nginx
+  apt: name=nginx state=present update_cache=true
+  register: nginxinstalled
+  notify:
+   - start nginx
+
+- name: Replace nginx.conf
+  template:
+    src=templates/default.conf
+    dest=/etc/nginx/nginx.conf

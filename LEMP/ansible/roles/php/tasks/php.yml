@@ -3,7 +3,7 @@
   apt_repository: repo='ppa:ondrej/php'
                   state=present
                   update_cache=yes
-  sudo: true
+  become: true
 
 - name: PHP | install php packages
   apt: pkg={{ item }} state=installed
@@ -24,7 +24,7 @@
     - php7.2-intl
     - php7.2-bz2
     - php7.2-xml
-  sudo: true
+  become: true
 
 - name: PHP | FPM php.ini
   template:
@@ -34,7 +34,7 @@
     owner=root
     group=root
     mode=0644
-  sudo: true
+  become: true
 
 - name: PHP | CLI php.ini
   template:
@@ -44,7 +44,7 @@
     owner=root
     group=root
     mode=0644
-  sudo: true
+  become: true
 
 - name: PHP | configure opcache
   template:
@@ -54,12 +54,12 @@
     owner=root
     group=root
     mode=0644
-  sudo: true
+  become: true
 
 - name: PHP | restart nginx
   raw: service nginx restart
-  sudo: true
+  become: true
 
 - name: PHP | restart fpm
   raw: service php7.2-fpm restart
-  sudo: true
+  become: true

@@ -1,0 +1,93 @@
+2022-01-08 22:10:09,306 p=37238 u=dima n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-01-08 22:10:10,482 p=37238 u=dima n=ansible | ERROR! conflicting action statements: apt, sudo
+
+The error appears to be in '/home/dima/webacademy/flask/LEMP/ansible/roles/php/tasks/php.yml': line 8, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: PHP | install php packages
+  ^ here
+
+2022-01-08 22:11:40,565 p=37337 u=dima n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-01-08 22:11:40,807 p=37337 u=dima n=ansible | ERROR! conflicting action statements: apt, sudo
+
+The error appears to be in '/home/dima/webacademy/flask/LEMP/ansible/roles/php/tasks/php.yml': line 8, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: PHP | install php packages
+  ^ here
+
+2022-01-08 22:12:15,132 p=37399 u=dima n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-01-08 22:12:15,543 p=37399 u=dima n=ansible | ERROR! conflicting action statements: shell, sudo
+
+The error appears to be in '/home/dima/webacademy/flask/LEMP/ansible/roles/php/tasks/composer.yml': line 7, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: PHP | Install Composer
+  ^ here
+
+2022-01-08 22:12:27,309 p=37450 u=dima n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-01-08 22:12:27,956 p=37450 u=dima n=ansible | ERROR! conflicting action statements: apt, sudo
+
+The error appears to be in '/home/dima/webacademy/flask/LEMP/ansible/roles/mysql/tasks/mysql.yml': line 2, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+---
+- name: MySQL | install mysql packages
+  ^ here
+
+2022-01-08 22:14:30,688 p=37596 u=dima n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-01-08 22:14:31,136 p=37596 u=dima n=ansible | ERROR! conflicting action statements: raw, sudo
+
+The error appears to be in '/home/dima/webacademy/flask/LEMP/ansible/roles/restartsvcs/tasks/main.yml': line 5, column 3, but may
+be elsewhere in the file depending on the exact syntax problem.
+
+The offending line appears to be:
+
+
+- name: restart php-fpm
+  ^ here
+
+2022-01-08 22:15:03,957 p=37656 u=dima n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-01-08 22:15:04,570 p=37656 u=dima n=ansible | [WARNING]: Could not match supplied host pattern, ignoring: ubuntu_servers
+
+2022-01-08 22:15:04,572 p=37656 u=dima n=ansible | PLAY [Provision LEMP and related tools] ****************************************
+2022-01-08 22:15:04,572 p=37656 u=dima n=ansible | skipping: no hosts matched
+2022-01-08 22:15:04,574 p=37656 u=dima n=ansible | PLAY RECAP *********************************************************************
+2022-01-08 22:15:11,867 p=37694 u=dima n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-01-08 22:15:12,381 p=37694 u=dima n=ansible | [WARNING]: Could not match supplied host pattern, ignoring: ubuntu_servers
+
+2022-01-08 22:15:12,383 p=37694 u=dima n=ansible | PLAY [Provision LEMP and related tools] ****************************************
+2022-01-08 22:15:12,383 p=37694 u=dima n=ansible | skipping: no hosts matched
+2022-01-08 22:15:12,383 p=37694 u=dima n=ansible | PLAY RECAP *********************************************************************
+2022-01-08 22:19:05,193 p=38263 u=dima n=ansible | PLAY [Provision LEMP and related tools] ****************************************
+2022-01-08 22:19:05,660 p=38263 u=dima n=ansible | TASK [Gathering Facts] *********************************************************
+2022-01-08 22:19:08,800 p=38263 u=dima n=ansible | fatal: [ubntansible-2]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.123.3 port 22: No route to host", "unreachable": true}
+2022-01-08 22:19:20,431 p=38263 u=dima n=ansible | fatal: [ubntansible-1]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: Host key verification failed.", "unreachable": true}
+2022-01-08 22:19:20,432 p=38263 u=dima n=ansible | PLAY RECAP *********************************************************************
+2022-01-08 22:19:20,432 p=38263 u=dima n=ansible | ubntansible-1              : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
+2022-01-08 22:19:20,432 p=38263 u=dima n=ansible | ubntansible-2              : ok=0    changed=0    unreachable=1    failed=0    skipped=0    rescued=0    ignored=0   
