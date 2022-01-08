@@ -1,0 +1,12 @@
+---
+# Main playbook for install LEMP on Linux
+- name: Provision LEMP and related tools
+  hosts: Ubuntu_servers
+  sudo: yes
+  gather_facts: yes
+
+  roles:
+     - nginx
+     - php
+     - mysql
+     - restartsvcs

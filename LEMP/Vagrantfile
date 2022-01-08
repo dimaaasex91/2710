@@ -1,9 +1,3 @@
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
-# All Vagrant configuration is done below. The "2" in Vagrant.configure
-# configures the configuration version (we support older styles for
-# backwards compatibility). Please don't change it unless you know what
-# you're doing.
 ubuntu_prefix = "UbntAnsible"
 ubuntu_count = 2
 ubuntu_count_cpus = 2
@@ -19,40 +13,40 @@ cidr_prefix = "192.168.123"
 
 Vagrant.configure("2") do |config|
   (1..ubuntu_count).each do |i|
-    config.vm.define "#{ubuntu_prefix}-#{i}" do |node|
-      node.vm.box = "#{ubuntu_version}"
-      #node.vm.box_check_update = true
-      node.vm.hostname = "#{ubuntu_prefix}-#{i}"
-      node.vm.provider "virtualbox" do |vb|
+    config.vm.define "#{ubuntu_prefix}-#{i}" do |host|
+      host.vm.box = "#{ubuntu_version}"
+      host.vm.box_check_update = true
+      host.vm.hostname = "#{ubuntu_prefix}-#{i}"
+      host.vm.provider "virtualbox" do |vb|
         vb.name = "#{ubuntu_prefix}-#{i}"
         #vb.check_guest_additions = true
         vb.cpus = "#{ubuntu_count_cpus}"
         vb.memory = "#{ubuntu_count_memory}"
       end
-      node.vm.network "private_network", ip: "#{cidr_prefix}.#{i+1}"
-      node.vm.network "forwarded_port", guest: 80, host: 8080
-      node.vm.network "forwarded_port", guest: 3306, host: 33060
-      node.vm.provision "ansible" do |ansible|
-        ansible.inventory_path = "./ansible/inventories/hosts"
-        ansible.playbook = "./ansible/LEMP.yml"
-        #ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
+      host.vm.network "private_network", ip: "#{cidr_prefix}.#{i+1}"
+      # host.vm.network "forwarded_port", guest: 80, host: 8080
+      # host.vm.network "forwarded_port", guest: 3306, host: 33060
+      host.vm.provision "ansible" do |ansible|
+        ansible.inventory_path = "./ansible/inventories/hosts.yml"
+        ansible.playbook = "./ansible/lemp.yml"
+        ansible.extra_vars = { ansible_python_interpreter:"/usr/bin/python3" }
       end
     end
   end
 
   # (1..centos_count).each do |i|
-  #   config.vm.define "#{centos_prefix}-#{i}" do |node|
-  #     node.vm.box = "#{centos_version}"
-  #     node.vm.box_check_update = true
-  #     node.vm.hostname = "#{centos_prefix}-#{i}"
-  #     node.vm.provider "virtualbox" do |vb|
+  #   config.vm.define "#{centos_prefix}-#{i}" do |host|
+  #     host.vm.box = "#{centos_version}"
+  #     host.vm.box_check_update = true
+  #     host.vm.hostname = "#{centos_prefix}-#{i}"
+  #     host.vm.provider "virtualbox" do |vb|
   #       vb.name = "#{centos_prefix}-#{i}"
   #       vb.check_guest_additions = true
   #       vb.cpus = "#{centos_count_cpus}"
   #       vb.memory = "#{centos_count_memory}"
   #     end
-  #     node.vm.network "private_network", ip: "#{cidr_prefix}.#{ubuntu_count+i+1}"
-  #     # node.vm.provision "shell", inline: <<-SHELL
+  #     host.vm.network "private_network", ip: "#{cidr_prefix}.#{ubuntu_count+i+1}"
+  #     # host.vm.provision "shell", inline: <<-SHELL
   #     #   sudo yum update 
   #     #   sudo yum upgrade
   #     # SHELL
