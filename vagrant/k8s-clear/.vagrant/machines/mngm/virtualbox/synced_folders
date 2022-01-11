@@ -1,1 +1,0 @@
-{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"E:/education/webacademy/gitlab_wa/flask/vagrant/k8s-clear","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

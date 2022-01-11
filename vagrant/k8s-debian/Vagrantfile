@@ -1,0 +1,84 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+master_node_prefix = "master-node"
+master_node_count = 1
+master_node_count_cpus = 2
+master_node_count_memory = "4096"
+worker_node_prefix = "worker-node"
+worker_node_count = 3
+worker_node_count_cpus = 2
+worker_node_count_memory = "2048"
+debian_version = "debian/bullseye64"
+cluster_cidr_prefix = "10.51.10"
+
+
+Vagrant.configure("2") do |config|
+  config.vm.define "mngm-debian" do |mngm|
+    mngm.vm.box = "#{debian_version}"
+    mngm.vm.box_check_update = true
+    mngm.vm.hostname = "mngm"
+    mngm.vm.provider "virtualbox" do |vb|
+      vb.name = "mngm-debian"
+      vb.check_guest_additions = true
+      vb.cpus = 2
+      vb.memory = "2048"
+    end
+    mngm.vm.network "private_network", ip: "#{cluster_cidr_prefix}.200"
+    #mngm.vm.provision "shell", path: "./scripts/mngm.sh"
+  end
+
+  # config.vm.define "loadbalancer" do |lb|
+  #   lb.vm.box = "#{debian_version}"
+  #   lb.vm.box_check_update = true
+  #   lb.vm.hostname = "k8s.myownserv.space"
+  #   lb.vm.provider "virtualbox" do |vb|
+  #     vb.name = "loadbalancer"
+  #     vb.check_guest_additions = true
+  #     vb.cpus = 2
+  #     vb.memory = "2048"
+  #   end
+  #   lb.vm.network "private_network", ip: "#{cluster_cidr_prefix}.205"
+  # end
+
+  (1..master_node_count).each do |i|
+    config.vm.define "#{master_node_prefix}-#{i}" do |node|
+      node.vm.box = "#{debian_version}"
+      node.vm.box_check_update = true
+      node.vm.hostname = "#{master_node_prefix}-#{i}"
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "#{master_node_prefix}-#{i}"
+        vb.check_guest_additions = true
+        vb.cpus = "#{master_node_count_cpus}"
+        vb.memory = "#{master_node_count_memory}"
+      end
+      node.vm.network "private_network", ip: "#{cluster_cidr_prefix}.#{i+1}"
+      # node.vm.provision "shell", inline: <<-SHELL
+      #   sudo apt update 
+      #   sudo apt install git
+      # SHELL
+    end
+  end
+
+  (1..worker_node_count).each do |i|
+    config.vm.define "#{worker_node_prefix}-#{i}" do |node|
+      node.vm.box = "#{debian_version}"
+      node.vm.box_check_update = true
+      node.vm.hostname = "#{worker_node_prefix}-#{i}"
+      node.vm.provider "virtualbox" do |vb|
+        vb.name = "#{worker_node_prefix}-#{i}"
+        vb.check_guest_additions = true
+        vb.cpus = "#{worker_node_count_cpus}"
+        vb.memory = "#{worker_node_count_memory}"
+      end
+      node.vm.network "private_network", ip: "#{cluster_cidr_prefix}.#{master_node_count+i+1}"
+      # node.vm.provision "shell", inline: <<-SHELL
+      #   sudo apt update 
+      # SHELL
+    end
+  end
+end

@@ -6,13 +6,13 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 master_node_prefix = "master"
-master_node_count = 3
+master_node_count = 1
 master_node_count_cpus = 2
-master_node_count_memory = "2048"
+master_node_count_memory = "4096"
 worker_node_prefix = "worker"
 worker_node_count = 3
-worker_node_count_cpus = 1
-worker_node_count_memory = "1024"
+worker_node_count_cpus = 2
+worker_node_count_memory = "2048"
 centos_version = "centos/7"
 cluster_cidr_prefix = "192.168.100"
 
@@ -57,10 +57,10 @@ Vagrant.configure("2") do |config|
         vb.memory = "#{master_node_count_memory}"
       end
       node.vm.network "private_network", ip: "#{cluster_cidr_prefix}.#{i+1}"
-      node.vm.provision "shell", inline: <<-SHELL
-        sudo yum update 
-        sudo yum install git
-      SHELL
+      # node.vm.provision "shell", inline: <<-SHELL
+      #   sudo yum update 
+      #   sudo yum install git
+      # SHELL
     end
   end
 
