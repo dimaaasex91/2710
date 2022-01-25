@@ -2,8 +2,7 @@ locals {
   k8s = {
       k8s_host              = "https://master1.myownserv.space:6443"
   }
-
-
+  
   helm = {
     helm_gitlab_version                 = "0.23.0"
     helm_prometheus_operator_version    = "12.3.0"

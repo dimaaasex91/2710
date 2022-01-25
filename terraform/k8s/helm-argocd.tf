@@ -1,9 +1,9 @@
 resource "helm_release" "argocd" {
   name          = "argo-cd"
-  repository    = local.argocd_helm_repository
+  repository    = local.helm.argocd_helm_repository
   chart         = "argo-cd"
-  version       = local.helm_argocd_version
-  namespace     = "argocd"
+  version       = local.helm.helm_argocd_version
+  namespace     = kubernetes_namespace.argocd.metadata[0].name
 
 
   values = [
